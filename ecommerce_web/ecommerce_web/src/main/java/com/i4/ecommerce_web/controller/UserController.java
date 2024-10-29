@@ -24,8 +24,8 @@ public class UserController {
     /**
      *
      * 註冊會員
-     * @param user
-     * @return
+     * @param user username,password,email
+     * @return Result,userId
      */
     @PostMapping("/register")
     public Result register(@RequestBody User user){
@@ -39,8 +39,8 @@ public class UserController {
 
     /**
      * 會員登入
-     * @param user
-     * @return
+     * @param user username,password
+     * @return Result,jwt
      */
     @PostMapping("/login")
     public Result login(@RequestBody User user){

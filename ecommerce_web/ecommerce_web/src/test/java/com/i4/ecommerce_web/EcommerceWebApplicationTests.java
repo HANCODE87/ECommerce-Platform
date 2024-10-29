@@ -1,17 +1,11 @@
 package com.i4.ecommerce_web;
-
 import com.i4.ecommerce_web.utils.JwtUtils;
-import com.mysql.cj.protocol.a.authentication.Sha256PasswordPlugin;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
