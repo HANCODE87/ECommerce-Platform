@@ -7,20 +7,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Map;
 
 public class JwtUtils {
 
     private static final String SECRET = "ALONGSERETKEYNEEDSVERYLONGVERYLONGVERYLONGVERYLONGVERYLONG"; // 這裡可以從 application.yml 加載
-    private static final long EXPIRATION_TIME = 86400000; // 1 天
+    private static final long EXPIRATION_TIME = 86400000L; // 1 天
 
     /**
-     * 生成JWT Token
-     * @param username
+     * 生成JWT claims
+     * @param claims
      * @return
      */
-    public static String generateToken(String username) {
+    public static String generateJwt(Map<String,Object> claims) {
         return Jwts.builder() //調用builder靜態方法 創建JWT生成器 用來設置token內容 生成JWT字串
-                .setSubject(username) //設定subject
+                .setClaims(claims)//設定subject
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) //設定過期時間
                 .signWith(SignatureAlgorithm.HS256, SECRET) //設定算法以及密鑰
                 .compact(); //壓縮以後生成JWT字串

@@ -14,5 +14,5 @@ public interface UserService {
      * @param user
      * @return
      */
-    String login(User user);
+    User login(User user);
 }

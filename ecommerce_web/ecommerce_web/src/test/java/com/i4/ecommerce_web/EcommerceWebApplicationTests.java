@@ -51,7 +51,9 @@ class EcommerceWebApplicationTests {
     @Test
     void test(){
         String username = "testUser";
-        String token = JwtUtils.generateToken(username);
+        HashMap claims = new HashMap();
+        claims.put("username", username);
+        String token = JwtUtils.generateJwt(claims);
 
         assertNotNull(token);  // 確認生成的 token 不是 null
         assertTrue(token.contains("."));  // 確認 token 具備 JWT 標準格式

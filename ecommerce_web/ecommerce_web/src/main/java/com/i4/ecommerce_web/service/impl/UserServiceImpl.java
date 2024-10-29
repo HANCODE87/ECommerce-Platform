@@ -4,6 +4,7 @@ import com.i4.ecommerce_web.mapper.UserMapper;
 import com.i4.ecommerce_web.pojo.Result;
 import com.i4.ecommerce_web.pojo.User;
 import com.i4.ecommerce_web.service.UserService;
+import com.i4.ecommerce_web.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public String register(User user) {
-        //處理信箱重複問題
-        if(userMapper.findByEmail(user.getEmail()) != null) {
+        //處理username 信箱重複問題
+        if(userMapper.findByEmail(user.getEmail()) != null || userMapper.findByUsername()!=null) {
             return "User already exists";
         }
         user.setCreateTime(LocalDateTime.now());
@@ -31,9 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(User user) {
-
-        return "";
+    public User login(User user) {
+        return userMapper.getByUsernameAndPassword(user);
     }
 
 

@@ -12,7 +12,7 @@ public interface UserMapper {
     /**
      * 根據email查詢用戶
      */
-    @Select("select user_id,username,password,email,create_time,update_time from user where email = #{email}")
+    @Select("select * from user where email = #{email}")
     User findByEmail(String email);
 
     /**
@@ -22,4 +22,10 @@ public interface UserMapper {
     @Insert("insert into user(username,password,email) values(#{username},#{password},#{email}) ")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
     void insert(User user);
+
+    @Select("select * from user where username = #{username} and password = #{password}")
+    User getByUsernameAndPassword(User user);
+
+    @Select("select * from user where username = #{username}")
+    User findByUsername();
 }
