@@ -5,4 +5,12 @@
 <mapper namespace="com.i4.ecommerce_web.mapper.UserMapper" >
 
 
+    <update id="updateById">
+        update user
+        <set>
+            username = #{username},
+            email = #{email}
+        </set>
+        where user_id = #{userId}
+    </update>
 </mapper>

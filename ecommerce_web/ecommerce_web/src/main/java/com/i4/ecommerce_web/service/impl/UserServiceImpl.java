@@ -31,13 +31,39 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
+     * 根據帳號密碼登入
      * @param user username,password
      * @return user
      */
     @Override
     public User login(User user) {
         return userMapper.getByUsernameAndPassword(user);
+    }
+
+    /**
+     * 根據id取得用戶資料
+     * @param id id
+     * @return user
+     */
+    @Override
+    public User getUserInfo(Integer id) {
+        return userMapper.findById(id);
+    }
+
+    /**
+     * 根據id更新用戶資料
+     * @param user id username email
+     * @return user
+     */
+    @Override
+    public User updateUserInfo(User user) {
+        if (userMapper.findById(user.getUserId()) == null){
+            return null;
+        }
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
+        userMapper.updateById(user);
+        return userMapper.findById(user.getUserId());
     }
 
 

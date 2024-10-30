@@ -15,7 +15,10 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //不是登入就攔截
-        if(!request.getServletPath().equals("api/user/login") || !request.getServletPath().equals("api/user/register")){
+        System.out.println("攔截器啟動");
+        //如果不是進行登入或註冊就進行驗證
+        if(!request.getServletPath().equals("/api/user/login") && !request.getServletPath().equals("/api/user/register")){
+            System.out.println("捕捉到了!");
             String authorHeader = request.getHeader("Authorization");
             String bearer = "Bearer ";
             if (authorHeader != null && authorHeader.startsWith(bearer)){

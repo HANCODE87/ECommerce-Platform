@@ -16,4 +16,18 @@ public interface UserService {
      * @return user object
      */
     User login(User user);
+
+    /**
+     *
+     * @param id id
+     * @return userId username email
+     */
+    User getUserInfo(Integer id);
+
+    /**
+     * 根據id修改用戶資料
+     * @param  user id username email
+     * @return user
+     */
+    User updateUserInfo(User user);
 }

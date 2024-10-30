@@ -1,10 +1,7 @@
 package com.i4.ecommerce_web.mapper;
 
 import com.i4.ecommerce_web.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
@@ -15,7 +12,7 @@ public interface UserMapper {
      * @return user
      */
     @Select("select * from user where email = #{email}")
-    User findByEmail(String email);
+    public User findByEmail(String email);
 
     /**
      * 註冊用戶
@@ -23,20 +20,31 @@ public interface UserMapper {
      */
     @Insert("insert into user(username,password,email) values(#{username},#{password},#{email}) ")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
-    void insert(User user);
+    public void insert(User user);
 
     /**
-     *
+     * 根據username password查詢用戶
      * @param user username,password
      * @return user
      */
     @Select("select * from user where username = #{username} and password = #{password}")
-    User getByUsernameAndPassword(User user);
+    public User getByUsernameAndPassword(User user);
 
     /**
-     * @param user username
+     * 根據username查詢用戶
      * @return user
      */
     @Select("select * from user where username = #{username}")
-    User findByUsername(User user);
+    public User findByUsername();
+
+    /**
+     * 根據id查詢用戶
+     * @param id id
+     * @return user
+     */
+    @Select("select * from user where user_id = #{id}")
+    public User findById(Integer id);
+
+//    @Update("update user set username=#{username},email=#{email} where user_id=#{userId}")
+    public void updateById(User user);
 }
