@@ -63,7 +63,7 @@ public class UserController {
     public Result getUserInfo(@PathVariable Integer id){
         log.info("取得用戶資料:{}",id);
         User user = userService.getUserInfo(id);
-        Map<String,Object> userData = new HashMap<String,Object>();
+        Map<String,Object> userData = new HashMap<>();
         userData.put("userId",user.getUserId());
         userData.put("username",user.getUsername());
         userData.put("email",user.getEmail());
