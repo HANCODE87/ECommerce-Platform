@@ -63,7 +63,7 @@ public class UserController {
     public Result getUserInfo(@PathVariable Integer id){
         log.info("取得用戶資料:{}",id);
         User user = userService.getUserInfo(id);
-        Map userData = new HashMap();
+        Map<String,Object> userData = new HashMap<String,Object>();
         userData.put("userId",user.getUserId());
         userData.put("username",user.getUsername());
         userData.put("email",user.getEmail());
@@ -77,7 +77,7 @@ public class UserController {
         if(userService.updateUserInfo(user) == null){
             return Result.error("ID錯誤，沒有資料");
         }
-        Map userData = new HashMap();
+        Map<String,Object> userData = new HashMap<String,Object>();
         userData.put("userId",user.getUserId());
         userData.put("username",user.getUsername());
         userData.put("email",user.getEmail());
