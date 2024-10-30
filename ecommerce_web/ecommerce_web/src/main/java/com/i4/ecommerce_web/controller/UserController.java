@@ -77,10 +77,6 @@ public class UserController {
         if(userService.updateUserInfo(user) == null){
             return Result.error("ID錯誤，沒有資料");
         }
-        Map<String,Object> userData = new HashMap<String,Object>();
-        userData.put("userId",user.getUserId());
-        userData.put("username",user.getUsername());
-        userData.put("email",user.getEmail());
-        return Result.success("更新成功",userData);
+        return Result.success();
     }
 }

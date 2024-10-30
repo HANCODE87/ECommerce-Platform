@@ -12,7 +12,7 @@ public interface UserMapper {
      * @return user
      */
     @Select("select * from user where email = #{email}")
-    public User findByEmail(String email);
+    User findByEmail(String email);
 
     /**
      * 註冊用戶
@@ -20,7 +20,7 @@ public interface UserMapper {
      */
     @Insert("insert into user(username,password,email) values(#{username},#{password},#{email}) ")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
-    public void insert(User user);
+    void insert(User user);
 
     /**
      * 根據username password查詢用戶
@@ -28,14 +28,14 @@ public interface UserMapper {
      * @return user
      */
     @Select("select * from user where username = #{username} and password = #{password}")
-    public User getByUsernameAndPassword(User user);
+    User getByUsernameAndPassword(User user);
 
     /**
      * 根據username查詢用戶
      * @return user
      */
     @Select("select * from user where username = #{username}")
-    public User findByUsername();
+    User findByUsername();
 
     /**
      * 根據id查詢用戶
@@ -43,8 +43,8 @@ public interface UserMapper {
      * @return user
      */
     @Select("select * from user where user_id = #{id}")
-    public User findById(Integer id);
+    User findById(Integer id);
 
 //    @Update("update user set username=#{username},email=#{email} where user_id=#{userId}")
-    public void updateById(User user);
+    void updateById(User user);
 }

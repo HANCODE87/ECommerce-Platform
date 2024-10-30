@@ -13,7 +13,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     // 只會攔截一次
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
         //不是登入就攔截
         System.out.println("攔截器啟動");
         //如果不是進行登入或註冊就進行驗證

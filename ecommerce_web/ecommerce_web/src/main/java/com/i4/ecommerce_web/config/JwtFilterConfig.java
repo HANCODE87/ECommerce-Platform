@@ -2,7 +2,6 @@ package com.i4.ecommerce_web.config;
 
 import com.i4.ecommerce_web.filter.JwtFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
