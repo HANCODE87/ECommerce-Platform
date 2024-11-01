@@ -2,8 +2,7 @@ package com.i4.ecommerce_web.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.i4.ecommerce_web.utils.JwtUtils;
-import io.jsonwebtoken.Claims;
-import jakarta.annotation.Nullable;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class JwtFilter extends OncePerRequestFilter {
     //     只會攔截一次
     @Override
-    protected void doFilterInternal(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response,@Nullable FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //不是登入就攔截
         System.out.println("攔截器啟動");
         //如果不是進行登入或註冊就進行驗證
