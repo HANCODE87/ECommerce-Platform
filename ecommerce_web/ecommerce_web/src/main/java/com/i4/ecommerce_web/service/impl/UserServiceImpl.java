@@ -66,5 +66,19 @@ public class UserServiceImpl implements UserService {
         return userMapper.findById(user.getUserId());
     }
 
+    /**
+     * 根據id刪除資料
+     * @param id id
+     * @return Boolean
+     */
+    @Override
+    public Boolean deleteUser(Integer id) {
+        if(userMapper.findById(id) == null){
+            return false;
+        }
+        userMapper.deleteById(id);
+        return true;
+    }
+
 
 }

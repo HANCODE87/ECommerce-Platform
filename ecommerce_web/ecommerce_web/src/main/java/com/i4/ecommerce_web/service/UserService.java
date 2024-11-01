@@ -30,4 +30,12 @@ public interface UserService {
      * @return user
      */
     User updateUserInfo(User user);
+
+    /**
+     * 根據id刪除資料
+     *
+     * @param id id
+     * @return Boolean
+     */
+    Boolean deleteUser(Integer id);
 }

@@ -47,4 +47,7 @@ public interface UserMapper {
 
 //    @Update("update user set username=#{username},email=#{email} where user_id=#{userId}")
     void updateById(User user);
+
+    @Delete("delete from user where user_id = #{id}")
+    void deleteById(Integer id); 
 }

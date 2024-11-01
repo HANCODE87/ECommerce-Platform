@@ -2,11 +2,12 @@ package com.i4.ecommerce_web.config;
 
 import com.i4.ecommerce_web.filter.JwtFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class JwtFilterConfig {
-//    @Bean
+    @Bean
     public FilterRegistrationBean<JwtFilter> registerJwtFilter(){
         FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new JwtFilter()); //將 JwtFilter 過濾器實例分配給 registrationBean

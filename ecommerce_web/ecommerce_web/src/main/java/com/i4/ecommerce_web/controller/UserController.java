@@ -79,4 +79,13 @@ public class UserController {
         }
         return Result.success();
     }
+
+    @DeleteMapping("/{id}")
+    public Result deleteUser(@PathVariable Integer id){
+        log.info("刪除用戶:{}",id);
+        if (userService.deleteUser(id)){
+            return Result.success();
+        }
+        return Result.error("刪除失敗");
+    }
 }
