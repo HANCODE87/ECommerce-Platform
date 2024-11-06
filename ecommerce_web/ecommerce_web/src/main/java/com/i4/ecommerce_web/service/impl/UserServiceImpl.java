@@ -19,15 +19,15 @@ public class UserServiceImpl implements UserService {
      * @return msg
      */
     @Override
-    public String register(User user) {
+    public Boolean register(User user) {
         //處理username 信箱重複問題
         if(userMapper.findByEmail(user.getEmail()) != null || userMapper.findByUsername()!=null) {
-            return "User already exists";
+            return true;
         }
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         userMapper.insert(user);
-        return "User registered successfully";
+        return false;
     }
 
     /**
@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUserInfo(User user) {
         if (userMapper.findById(user.getUserId()) == null){
+            System.out.println("查無資料");
             return null;
         }
         user.setCreateTime(LocalDateTime.now());

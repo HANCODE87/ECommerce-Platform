@@ -6,10 +6,13 @@ import com.i4.ecommerce_web.service.UserService;
 import com.i4.ecommerce_web.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -25,13 +28,13 @@ public class UserController {
      * @return Result,userId
      */
     @PostMapping("/register")
-    public Result register(@RequestBody User user){
+    public ResponseEntity<Result> register(@RequestBody User user){
         log.info("註冊會員:{}",user);
-        String msg = userService.register(user);
-        if(msg.equals("User already exists")){
-            return Result.error(msg);
+        Boolean userExists = userService.register(user);
+        if(userExists){
+            return new ResponseEntity<>(Result.error("此帳號或信箱已註冊過"), HttpStatus.CONFLICT);
         }
-        return Result.success(msg,user.getUserId());
+        return new ResponseEntity<>(Result.success("註冊成功"), HttpStatus.CREATED);
     }
 
     /**
@@ -40,8 +43,8 @@ public class UserController {
      * @return Result,jwt
      */
     @PostMapping("/login")
-    public Result login(@RequestBody User user){
-        log.info("用戶登陸:{}",user);
+    public ResponseEntity<Result> login(@RequestBody User user){
+        log.info("登錄請求：用戶名={} 密碼={}", user.getUsername(), user.getPassword());
         User userRespond = userService.login(user);
         //若有返回值則帳號密碼正確，進行登入
         if(userRespond != null){
@@ -49,9 +52,9 @@ public class UserController {
             claims.put("username", userRespond.getUsername());
             String jwt = JwtUtils.generateJwt(claims);
 //            System.out.println(JwtUtils.getClaims(jwt));
-            return Result.success("Login successful",jwt);
+            return new ResponseEntity<>(Result.success("成功登入",jwt), HttpStatus.OK);
         }
-        return Result.error("Invalid username or password");
+        return new ResponseEntity<>(Result.error("帳號或密碼錯誤"), HttpStatus.UNAUTHORIZED);
     }
 
     /**
@@ -60,32 +63,38 @@ public class UserController {
      * @return Result,userData
      */
     @GetMapping("/{id}")
-    public Result getUserInfo(@PathVariable Integer id){
+    public ResponseEntity<Result> getUserInfo(@PathVariable Integer id){
         log.info("取得用戶資料:{}",id);
         User user = userService.getUserInfo(id);
         Map<String,Object> userData = new HashMap<>();
         userData.put("userId",user.getUserId());
         userData.put("username",user.getUsername());
         userData.put("email",user.getEmail());
-        return Result.success(userData);
+        return new ResponseEntity<>(Result.success(userData), HttpStatus.FOUND);
     }
 
+    /**
+     * 根據id更新產品
+     * @param id id
+     * @param user user
+     * @return
+     */
     @PutMapping("/{id}")
-    public Result updateUserInfo(@PathVariable Integer id, @RequestBody User user){
+    public ResponseEntity<Result> updateUserInfo(@PathVariable Integer id, @RequestBody User user){
         log.info("更改用戶資料:{}",id);
         user.setUserId(id);
         if(userService.updateUserInfo(user) == null){
-            return Result.error("ID錯誤，沒有資料");
+            return new ResponseEntity<>(Result.error("ID錯誤，沒有資料"), HttpStatus.NOT_FOUND);
         }
-        return Result.success();
+        return new ResponseEntity<>(Result.success(),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public Result deleteUser(@PathVariable Integer id){
+    public ResponseEntity<Result> deleteUser(@PathVariable Integer id){
         log.info("刪除用戶:{}",id);
         if (userService.deleteUser(id)){
-            return Result.success();
+            return new ResponseEntity<>(Result.success(),HttpStatus.OK);
         }
-        return Result.error("刪除失敗");
+        return new ResponseEntity<>(Result.error("刪除失敗"), HttpStatus.NOT_FOUND);
     }
 }

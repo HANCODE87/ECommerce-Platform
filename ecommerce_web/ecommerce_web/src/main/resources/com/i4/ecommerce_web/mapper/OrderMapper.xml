@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.i4.ecommerce_web.mapper.OrderMapper">
+
+    <update id="updateById">
+        update orders
+        <set>
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
+            where id = #{id}
+        </set>
+    </update>
+</mapper>

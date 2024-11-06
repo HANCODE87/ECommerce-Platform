@@ -8,7 +8,7 @@ public interface UserService {
      * @param user username,password,email
      * @return msg
      */
-    String register(User user);
+    Boolean register(User user);
 
     /**
      * 登入用戶

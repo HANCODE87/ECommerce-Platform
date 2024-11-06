@@ -8,7 +8,7 @@ spring:
 #mybatis
 mybatis:
   configuration:
-    #??
+    #日誌
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #???????
     map-underscore-to-camel-case: true
