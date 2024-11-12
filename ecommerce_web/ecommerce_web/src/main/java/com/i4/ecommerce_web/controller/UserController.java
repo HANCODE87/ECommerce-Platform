@@ -27,7 +27,7 @@ public class UserController {
      * @return 成功或失敗的String
      */
     @PostMapping("/register")
-    public ResponseEntity<Result> register(@RequestBody User user){
+    public ResponseEntity<Result<Void>> register(@RequestBody User user){
         log.info("註冊會員:{}",user);
         Boolean userExists = userService.register(user);
         if(userExists){

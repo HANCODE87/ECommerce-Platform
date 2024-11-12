@@ -16,7 +16,6 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 新增order 並回傳order
      * @param order 新增的order
-     * @return 新增的order
      */
     @Override
     public void addOrder(Order order) {

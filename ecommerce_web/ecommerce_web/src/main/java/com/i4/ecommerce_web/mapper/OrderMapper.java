@@ -1,10 +1,8 @@
 package com.i4.ecommerce_web.mapper;
 
 import com.i4.ecommerce_web.pojo.Order;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
