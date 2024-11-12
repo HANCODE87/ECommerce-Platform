@@ -35,7 +35,7 @@ public interface UserMapper {
      * @return user
      */
     @Select("select * from user where username = #{username}")
-    User findByUsername();
+    User findByUsername(String username);
 
     /**
      * 根據id查詢用戶

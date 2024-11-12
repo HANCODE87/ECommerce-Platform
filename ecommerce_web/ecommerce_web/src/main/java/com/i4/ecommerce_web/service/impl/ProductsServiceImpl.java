@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ProductsServiceImpl implements ProductsService {
@@ -54,6 +55,11 @@ public class ProductsServiceImpl implements ProductsService {
         }
         productsMapper.deleteById(prodId);
         return true;
+    }
+
+    @Override
+    public List<Products> orderBySales() {
+        return productsMapper.orderBySales();
     }
 
 }

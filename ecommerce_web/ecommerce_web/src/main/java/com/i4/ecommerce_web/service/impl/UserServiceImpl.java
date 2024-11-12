@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean register(User user) {
         //處理username 信箱重複問題
-        if(userMapper.findByEmail(user.getEmail()) != null || userMapper.findByUsername()!=null) {
+        if(userMapper.findByEmail(user.getEmail()) != null || userMapper.findByUsername(user.getUsername()) != null) {
             return true;
         }
         user.setCreateTime(LocalDateTime.now());

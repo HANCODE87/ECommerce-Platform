@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("api/products")
@@ -68,4 +70,15 @@ public class ProductsController {
         }
         return new ResponseEntity<>(Result.success("成功刪除產品"),HttpStatus.OK);
     }
+
+    /**
+     * 生成熱銷產品
+     * @return List<Products> 產品的List
+     */
+    @GetMapping("/popular")
+    public ResponseEntity<Result> orderBySales(){
+        List<Products> products = productsService.orderBySales();
+        return new ResponseEntity<>(Result.success(products),HttpStatus.OK);
+    }
+
 }

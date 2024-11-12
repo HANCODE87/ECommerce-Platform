@@ -3,6 +3,8 @@ package com.i4.ecommerce_web.mapper;
 import com.i4.ecommerce_web.pojo.Products;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface ProductsMapper {
     /**
@@ -32,4 +34,11 @@ public interface ProductsMapper {
      */
     @Delete("delete from products where prod_id = #{prodId}")
     void deleteById(Integer prodId);
+
+    /**
+     * 根據銷量排序回傳商品
+     * @return List<Products> 16個
+     */
+    @Select("select * from products order by sales desc limit 16")
+    List<Products> orderBySales();
 }

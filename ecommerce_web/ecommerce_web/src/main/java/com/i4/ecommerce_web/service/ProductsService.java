@@ -2,6 +2,8 @@ package com.i4.ecommerce_web.service;
 
 import com.i4.ecommerce_web.pojo.Products;
 
+import java.util.List;
+
 public interface ProductsService {
 
 
@@ -26,5 +28,17 @@ public interface ProductsService {
      */
     Products updateProduct(Products products);
 
+    /**
+     * 刪除產品
+     * @param prodId 產品id
+     * @return 是否刪除成功
+     */
     Boolean deleteProduct(Integer prodId);
+
+    /**
+     * 回傳List根據銷售量排序
+     * @return List<Products> 排序後的產品名單
+     */
+    List<Products> orderBySales();
+
 }
