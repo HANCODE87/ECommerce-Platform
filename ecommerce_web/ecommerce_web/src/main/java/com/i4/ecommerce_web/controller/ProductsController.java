@@ -24,7 +24,7 @@ public class ProductsController {
      * @return Result 產品資訊
      */
     @PostMapping()
-    public ResponseEntity<Result> AddProduct(@RequestBody Products products){
+    public ResponseEntity<Result<Void>> addProduct(@RequestBody Products products){
         log.info("新增產品:{}",products);
         productsService.addProduct(products);
         return new ResponseEntity<>(Result.success("新增產品成功"), HttpStatus.CREATED);
@@ -36,7 +36,7 @@ public class ProductsController {
      * @return  product
      */
     @GetMapping("/{prodId}")
-    public ResponseEntity<Result> SearchProduct(@PathVariable Integer prodId){
+    public ResponseEntity<Result<Products>> searchProduct(@PathVariable Integer prodId){
         log.info("查詢產品:{}",prodId);
         return new ResponseEntity<>(Result.success(productsService.searchProduct(prodId)), HttpStatus.OK);
     }
@@ -48,7 +48,7 @@ public class ProductsController {
      * @return success
      */
     @PutMapping("/{prodId}")
-    public ResponseEntity<Result> UpdateProduct(@PathVariable Integer prodId, @RequestBody Products products){
+    public ResponseEntity<Result<Void>> updateProduct(@PathVariable Integer prodId, @RequestBody Products products){
         log.info("更新產品:{}",prodId);
         products.setProdId(prodId);
         if(productsService.updateProduct(products) == null){
@@ -63,7 +63,7 @@ public class ProductsController {
      * @return message
      */
     @DeleteMapping("/{prodId}")
-    public ResponseEntity<Result> DeleteProduct(@PathVariable Integer prodId){
+    public ResponseEntity<Result<Void>> deleteProduct(@PathVariable Integer prodId){
         log.info("刪除產品:{}",prodId);
         if (productsService.deleteProduct(prodId)){
             return new ResponseEntity<>(Result.error("刪除失敗"),HttpStatus.NOT_FOUND);
@@ -76,7 +76,7 @@ public class ProductsController {
      * @return List<Products> 產品的List
      */
     @GetMapping("/popular")
-    public ResponseEntity<Result> orderBySales(){
+    public ResponseEntity<Result<List<Products>>> orderBySales(){
         List<Products> products = productsService.orderBySales();
         return new ResponseEntity<>(Result.success(products),HttpStatus.OK);
     }

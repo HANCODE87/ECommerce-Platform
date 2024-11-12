@@ -7,18 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
     /**
-     * 新增order
+     * 新增order 並回傳order
      * @param order 新增的order
+     * @return 新增的order
      */
     @Override
     public void addOrder(Order order) {
         order.setCreateTime(LocalDateTime.now());
+        order.setStatus("未完成");//預設未完成
         orderMapper.addOrder(order);
     }
 
@@ -45,5 +48,15 @@ public class OrderServiceImpl implements OrderService {
         order.setCreateTime(LocalDateTime.now());
         orderMapper.updateById(order);
         return true;
+    }
+
+    /**
+     * 根據userId查詢order
+     * @param userId 使用者的id
+     * @return userId 相同的 order
+     */
+    @Override
+    public List<Order> getOrderByUserId(Integer userId) {
+        return orderMapper.findByUserId(userId);
     }
 }
