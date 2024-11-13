@@ -3,6 +3,7 @@ package com.i4.ecommerce_web.service;
 import com.i4.ecommerce_web.pojo.Order;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderService {
     /**
@@ -16,7 +17,7 @@ public interface OrderService {
      * @param orderId 查詢的id
      * @return 查詢的order
      */
-    Order searchOrder(Integer orderId);
+    Order searchOrderById(Integer orderId);
 
     /**
      * 修改訂單
@@ -31,4 +32,18 @@ public interface OrderService {
      * @return userId 相同的 order
      */
     List<Order> getOrderByUserId(Integer userId);
+
+    /**
+     * 尋找會員是否有相同orderId，並且狀態為未完成
+     * @param order 要比對的訂單
+     * @return 第一個符合條件的訂單
+     */
+    Optional<Integer> findMatchOrderId(Order order);
+
+    /**
+     * 尋找userId相同的訂單
+     * @param userId 使用者id
+     * @return userId相同的訂單List
+     */
+    List<Order> searchOrderByUserId(Integer userId);
 }

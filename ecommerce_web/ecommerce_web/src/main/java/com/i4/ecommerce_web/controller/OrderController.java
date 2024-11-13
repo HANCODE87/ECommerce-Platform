@@ -26,9 +26,22 @@ public class OrderController {
      */
     @PostMapping()
     public ResponseEntity<Result<Void>> addOrder(@RequestBody Order order) {
-        log.info("新增訂單:{}",order);
-        orderService.addOrder(order);
-        return new ResponseEntity<>(Result.success("新增訂單成功"), HttpStatus.CREATED);
+        log.info("新增訂單:{}", order);
+        //查詢與userId相同的Order
+
+        // 使用 ifPresentOrElse 來簡化判斷邏輯
+        return orderService.findMatchOrderId(order).map(existOrderId -> {
+            //如果有productId重複的訂單，則查詢該訂單並修改訂單
+            Order existOrder = orderService.searchOrderById(existOrderId);
+            //修改數量
+            existOrder.setQuantity(existOrder.getQuantity() + order.getQuantity());
+            orderService.updateOrder(existOrder);
+            return new ResponseEntity<>(Result.success("新增訂單成功"), HttpStatus.CREATED);
+        }).orElseGet(() -> {
+            //如果沒有productId重複的訂單，則新增訂單
+                orderService.addOrder(order);
+                return new ResponseEntity<>(Result.success("新增訂單成功"), HttpStatus.CREATED);
+        });
     }
 
     /**
@@ -39,7 +52,7 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ResponseEntity<Result<Order>> searchOrder(@PathVariable Integer orderId) {
         log.info("查詢訂單:{}",orderId);
-        return new ResponseEntity<>(Result.success(orderService.searchOrder(orderId)), HttpStatus.OK);
+        return new ResponseEntity<>(Result.success(orderService.searchOrderById(orderId)), HttpStatus.OK);
     }
 
     /**

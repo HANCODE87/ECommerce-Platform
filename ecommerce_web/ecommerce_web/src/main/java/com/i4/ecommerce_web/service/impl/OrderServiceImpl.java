@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -30,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
      * @return 找到的order
      */
     @Override
-    public Order searchOrder(Integer orderId) {
+    public Order searchOrderById(Integer orderId) {
         return orderMapper.findById(orderId);
     }
 
@@ -45,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
             return false;
         }
         order.setCreateTime(LocalDateTime.now());
+        //需要修改的訂單一定是未完成的
+        order.setStatus("未完成");
         orderMapper.updateById(order);
         return true;
     }
@@ -58,4 +61,28 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getOrderByUserId(Integer userId) {
         return orderMapper.findByUserId(userId);
     }
+
+    /**
+     * 尋找會員是否有相同orderId，並且狀態為未完成
+     * @param order 要比對的訂單
+     * @return 第一個符合條件的訂單
+     */
+    @Override
+    public Optional<Integer> findMatchOrderId(Order order) {
+
+        return orderMapper.findByUserId(order.getUserId()).stream().filter(o -> o.getProductId().equals(order.getProductId()) && o.getStatus().equals("未完成"))
+                .map(Order::getId).findFirst();
+    }
+
+    /**
+     * 尋找userId相同的訂單
+     * @param userId 使用者id
+     * @return userId相同的訂單List
+     */
+    @Override
+    public List<Order> searchOrderByUserId(Integer userId) {
+        return orderMapper.findByUserId(userId);
+    }
+
+
 }

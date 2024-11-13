@@ -48,10 +48,9 @@ public class UserController {
         //若有返回值則帳號密碼正確，進行登入
         if(userRespond != null){
             Map<String, Object> claims = new HashMap<>();
-            claims.put("userId", userRespond.getUserId());
-            claims.put("username", userRespond.getUsername());
+            claims.put("userId", userRespond.getUserId()); //在payload放入會員id
+            claims.put("username", userRespond.getUsername()); //在payload放入會員名稱
             String jwt = JwtUtils.generateJwt(claims);
-//            System.out.println(JwtUtils.getClaims(jwt));
             return new ResponseEntity<>(Result.success("成功登入",jwt), HttpStatus.OK);
         }
         return new ResponseEntity<>(Result.error("帳號或密碼錯誤", null), HttpStatus.UNAUTHORIZED);
