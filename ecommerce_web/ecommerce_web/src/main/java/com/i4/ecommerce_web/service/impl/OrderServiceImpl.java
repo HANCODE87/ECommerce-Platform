@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 查詢userId,productId,status都相同的訂單
      * @param order 新的order
-     * @return
+     * @return 找到的符合條件的order
      */
     public Order findSameIncompleteOrder(Order order) {
         return orderMapper.findByUserIdAndProductIdAndIncomplete(order);
