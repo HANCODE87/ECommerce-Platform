@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Slf4j
@@ -22,26 +21,12 @@ public class OrderController {
     /**
      * 新增訂單
      * @param order 使用者id,產品id,數量
-     * @return 成功訊息
+     * @return 建立的訂單
      */
     @PostMapping()
-    public ResponseEntity<Result<Void>> addOrder(@RequestBody Order order) {
+    public ResponseEntity<Result<Order>> handleNewOrder(@RequestBody Order order) {
         log.info("新增訂單:{}", order);
-        //查詢與userId相同的Order
-
-        // 使用 ifPresentOrElse 來簡化判斷邏輯
-        return orderService.findMatchOrderId(order).map(existOrderId -> {
-            //如果有productId重複的訂單，則查詢該訂單並修改訂單
-            Order existOrder = orderService.searchOrderById(existOrderId);
-            //修改數量
-            existOrder.setQuantity(existOrder.getQuantity() + order.getQuantity());
-            orderService.updateOrder(existOrder);
-            return new ResponseEntity<>(Result.success("新增訂單成功"), HttpStatus.CREATED);
-        }).orElseGet(() -> {
-            //如果沒有productId重複的訂單，則新增訂單
-                orderService.addOrder(order);
-                return new ResponseEntity<>(Result.success("新增訂單成功"), HttpStatus.CREATED);
-        });
+        return new ResponseEntity<>(Result.success(orderService.handleNewOrder(order)), HttpStatus.CREATED);
     }
 
     /**

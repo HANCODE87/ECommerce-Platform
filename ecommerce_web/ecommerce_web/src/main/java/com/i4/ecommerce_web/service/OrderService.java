@@ -34,11 +34,11 @@ public interface OrderService {
     List<Order> getOrderByUserId(Integer userId);
 
     /**
-     * 尋找會員是否有相同orderId，並且狀態為未完成
+     * 尋找會員是否有相同productId，並且狀態為未完成
      * @param order 要比對的訂單
      * @return 第一個符合條件的訂單
      */
-    Optional<Integer> findMatchOrderId(Order order);
+    Order handleNewOrder(Order order);
 
     /**
      * 尋找userId相同的訂單

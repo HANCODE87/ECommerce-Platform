@@ -32,5 +32,8 @@ public interface OrderMapper {
      */
     @Select("select * from orders where user_id = #{userId}")
     List<Order> findByUserId(Integer userId);
+
+    @Select("select * from orders where user_id = #{userId} and product_id = #{productId} and status = '未完成'")
+    Order findByUserIdAndProductIdAndIncomplete(Order order);
 }
 

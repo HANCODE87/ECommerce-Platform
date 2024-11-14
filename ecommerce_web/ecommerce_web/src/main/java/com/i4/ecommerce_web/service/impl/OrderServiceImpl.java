@@ -5,23 +5,22 @@ import com.i4.ecommerce_web.pojo.Order;
 import com.i4.ecommerce_web.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
     /**
-     * 新增order 並回傳order
+     * 確認是否有未完成且userId與productId相同的訂單，有則修改數量，否則新增訂單
      * @param order 新增的order
      */
     @Override
     public void addOrder(Order order) {
         order.setCreateTime(LocalDateTime.now());
-        order.setStatus("未完成");//預設未完成
+        order.setStatus("未完成");
         orderMapper.addOrder(order);
     }
 
@@ -46,7 +45,6 @@ public class OrderServiceImpl implements OrderService {
             return false;
         }
         order.setCreateTime(LocalDateTime.now());
-        //需要修改的訂單一定是未完成的
         order.setStatus("未完成");
         orderMapper.updateById(order);
         return true;
@@ -63,15 +61,35 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 尋找會員是否有相同orderId，並且狀態為未完成
+     * 尋找會員是否有相同productId，並且狀態為未完成
      * @param order 要比對的訂單
-     * @return 第一個符合條件的訂單
+     * @return 建立的訂單
      */
-    @Override
-    public Optional<Integer> findMatchOrderId(Order order) {
+    @Transactional
+    public Order handleNewOrder(Order order) {
+        Order existOrder = findSameIncompleteOrder(order);
 
-        return orderMapper.findByUserId(order.getUserId()).stream().filter(o -> o.getProductId().equals(order.getProductId()) && o.getStatus().equals("未完成"))
-                .map(Order::getId).findFirst();
+        if (existOrder == null) {
+            //如果沒有符合的order，則新增該order
+            addOrder(order);
+            //回傳新增後的order
+            return findSameIncompleteOrder(order);
+        }
+        //如果有符合的order，則修改數量
+        existOrder.setQuantity(order.getQuantity() + existOrder.getQuantity());
+        updateOrder(existOrder);
+
+        return existOrder;
+    }
+
+
+    /**
+     * 查詢userId,productId,status都相同的訂單
+     * @param order 新的order
+     * @return
+     */
+    public Order findSameIncompleteOrder(Order order) {
+        return orderMapper.findByUserIdAndProductIdAndIncomplete(order);
     }
 
     /**
@@ -83,6 +101,5 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> searchOrderByUserId(Integer userId) {
         return orderMapper.findByUserId(userId);
     }
-
 
 }
