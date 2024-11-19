@@ -16,39 +16,59 @@ import java.util.Map;
 
 
 public class JwtFilter extends OncePerRequestFilter {
-    //     只會攔截一次
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //不是登入就攔截
-        System.out.println("攔截器啟動");
-        //如果不是進行登入或註冊就進行驗證
-        if(!request.getServletPath().equals("/api/user/login") && !request.getServletPath().equals("/api/user/register")){
-            System.out.println("捕捉到了!");
-            String authorHeader = request.getHeader("Authorization");
-            String bearer = "Bearer ";
-            if (authorHeader != null && authorHeader.startsWith(bearer)){
-                try{
-                    String token = authorHeader.substring(bearer.length());
-                    JwtUtils.getClaims(token); //可以得到payload就是可以解析token
-                    filterChain.doFilter(request, response);
-                }catch (Exception e){
-                    System.out.println("Error : " + e); //調適用:輸出Exception
-                    response.setStatus(HttpStatus.FORBIDDEN.value());//狀態碼403
-                    //回傳json格式的錯誤
-                    Map<String, String> err = new HashMap<>();
-                    err.put("jwt_err", e.getMessage());
-                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                    new ObjectMapper().writeValue(response.getOutputStream(), err);
-                }
-            }
-            else {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            }
-        }
-        else{
+
+        //若回傳的方法是OPTIONS，則直接放行
+        if (request.getMethod().equals("OPTIONS")){
+            response.setStatus(HttpServletResponse.SC_OK);
             filterChain.doFilter(request, response);
+            return;
         }
+
+
+        //排除登入或註冊
+        if (request.getServletPath().equals("/api/user/login") || request.getServletPath().equals("/api/user/register")) {
+        filterChain.doFilter(request, response);
+        return;
+        }
+
+        // 只排除 GET 請求的 /api/products/{id} 路徑
+        if (request.getMethod().equals("GET") && request.getServletPath().matches("/api/products/\\d+")) {
+        filterChain.doFilter(request, response);
+        return;
+        }
+        //排除熱門產品
+        if (request.getServletPath().matches("/api/products/popular")) {
+        filterChain.doFilter(request, response);
+        return;
+        }
+
+
+        // 其他 API 路徑需要驗證 JWT
+    String authorHeader = request.getHeader("Authorization");
+    String bearer = "Bearer ";
+    if (authorHeader != null && authorHeader.startsWith(bearer)) {
+        System.out.println("攔截器啟動");
+        try {
+            String token = authorHeader.substring(bearer.length());
+            JwtUtils.getClaims(token); // 驗證 JWT
+            System.out.println("成功通過攔截器");
+            filterChain.doFilter(request, response);
+        } catch (Exception e) {
+            System.out.println("登入錯誤" + e.getMessage());
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            Map<String, String> err = new HashMap<>();
+            err.put("jwt_err", e.getMessage());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // 確保CORS設置
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            new ObjectMapper().writeValue(response.getOutputStream(), err);
+        }
+    } else {
+        System.out.println("未取得請求頭");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
     }
-
-
+}
 }

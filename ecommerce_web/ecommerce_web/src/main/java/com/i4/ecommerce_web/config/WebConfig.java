@@ -17,7 +17,13 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/**") // 攔截所有請求
-                .excludePathPatterns("/login", "/error"); // 排除某些請求
+                .excludePathPatterns(
+                    "/api/user/login",
+                    "/api/user/register",
+                    "/api/products/{prodId}",
+                    "/api/products/popular",
+                    "/error"
+                ); // 排除特定請求
     }
 
     // 添加 CORS 配置
@@ -25,8 +31,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // 允許所有的 API 路徑
                 .allowedOrigins("http://localhost:3000")  // 允許來自 React 前端的請求
-                .allowedMethods("GET", "POST", "PUT", "DELETE")  // 允許的 HTTP 方法
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // 允許的 HTTP 方法
                 .allowedHeaders("*")  // 允許所有請求頭
+                .exposedHeaders("Authorization") // 允許暴露 Authorization 標頭
                 .allowCredentials(true);  // 允許攜帶憑證 (例如 Cookie)
     }
 
