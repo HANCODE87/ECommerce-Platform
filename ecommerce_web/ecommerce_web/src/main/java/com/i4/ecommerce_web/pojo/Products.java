@@ -15,6 +15,7 @@ public class Products {
     private String prodName;
     private Double prodPrice;
     private Integer prodStock;
+    private Integer sales;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

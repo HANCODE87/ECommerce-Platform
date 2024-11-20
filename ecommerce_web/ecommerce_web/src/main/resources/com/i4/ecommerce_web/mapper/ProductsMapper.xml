@@ -19,4 +19,51 @@
             where prod_id = #{prodId}
         </set>
     </update>
+
+    <select id="searchByKeyword" resultType="com.i4.ecommerce_web.pojo.Products">
+        select prod_name,prod_price,prod_stock,sales from products
+        <where>
+            <if test="keyWord != null and keyWord.trim() != ''">
+                prod_name like concat('%',#{keyWord},'%')
+            </if>
+        </where>
+        order by
+        <choose>
+        <when test="sort == 'sales'">
+            sales
+        </when>
+        <when test="sort == 'prod_price'">
+            prod_price
+        </when>
+        <otherwise>
+            prod_name
+        </otherwise>
+        </choose>
+        <if test="isAsc != true">
+            desc
+        </if>
+    </select>
+
+    <select id="orderBySort" resultType="com.i4.ecommerce_web.pojo.Products">
+    select prod_name, prod_price, prod_stock, sales
+    from products
+    order by
+    <choose>
+        <when test="sort == 'sales'">
+            sales
+        </when>
+        <when test="sort == 'price'">
+            prod_price
+        </when>
+        <when test="sort == 'stock'">
+            prod_stock
+        </when>
+        <otherwise>
+            prod_name
+        </otherwise>
+    </choose>
+    <if test="isAsc != true">
+        desc
+    </if>
+</select>
 </mapper>

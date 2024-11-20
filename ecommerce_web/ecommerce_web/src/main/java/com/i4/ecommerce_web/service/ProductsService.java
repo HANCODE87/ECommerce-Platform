@@ -20,7 +20,7 @@ public interface ProductsService {
      * @param prodId prodId
      * @return product
      */
-    Products searchProduct(Integer prodId);
+    Products findProductById(Integer prodId);
 
     /**
      * 更新產品
@@ -35,10 +35,20 @@ public interface ProductsService {
      */
     Boolean deleteProduct(Integer prodId);
 
-    /**
-     * 回傳List根據銷售量排序
-     * @return List<Products> 排序後的產品名單
+        /**
+     * 根據排序方式查詢產品
+     * @param sort 排序方式
+     * @param isAsc 是否是正序
+     * @return 排序後的產品
      */
-    List<Products> orderBySales();
+    List<Products> orderProducts(String sort,boolean isAsc);
 
+    /**
+     * 根據關鍵字查詢產品
+     * @param keyWord 關鍵字
+     * @param sort 排序方式
+     * @param isAsc 是否是正序
+     * @return 符合關鍵字的商品
+     */
+    List<Products> searchByKeyWord(String keyWord, String sort,boolean isAsc);
 }

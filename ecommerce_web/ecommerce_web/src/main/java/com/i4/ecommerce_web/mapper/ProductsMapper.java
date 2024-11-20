@@ -36,9 +36,19 @@ public interface ProductsMapper {
     void deleteById(Integer prodId);
 
     /**
-     * 根據銷量排序回傳商品
-     * @return List<Products> 16個
+     * 根據銷量排序查詢產品
+     * @param isAsc 是否是正序
+     * @param sort 排序方式
+     * @return 排序後的產品
      */
-    @Select("select * from products order by sales desc limit 16")
-    List<Products> orderBySales();
+    List<Products> orderBySort(String sort,boolean isAsc);
+
+    /**
+     * 根據關鍵字查詢產品
+     * @param keyWord 關鍵字
+     * @param sort 排序方式
+     * @param isAsc 是否是正序
+     * @return 符合關鍵字的商品
+     */
+    List<Products> searchByKeyword(String keyWord,String sort,boolean isAsc);
 }
