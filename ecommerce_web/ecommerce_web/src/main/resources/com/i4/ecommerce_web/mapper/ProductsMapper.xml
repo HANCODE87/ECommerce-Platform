@@ -21,7 +21,7 @@
     </update>
 
     <select id="searchByKeyword" resultType="com.i4.ecommerce_web.pojo.Products">
-        select prod_name,prod_price,prod_stock,sales from products
+        select prod_id,prod_name,prod_price,prod_stock,sales from products
         <where>
             <if test="keyWord != null and keyWord.trim() != ''">
                 prod_name like concat('%',#{keyWord},'%')
@@ -45,7 +45,7 @@
     </select>
 
     <select id="orderBySort" resultType="com.i4.ecommerce_web.pojo.Products">
-    select prod_name, prod_price, prod_stock, sales
+    select prod_id,prod_name, prod_price, prod_stock, sales
     from products
     order by
     <choose>

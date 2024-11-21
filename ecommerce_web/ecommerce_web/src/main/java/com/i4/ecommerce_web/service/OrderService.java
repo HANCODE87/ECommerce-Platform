@@ -45,4 +45,19 @@ public interface OrderService {
      * @return userId相同的訂單List
      */
     List<Order> searchOrderByUserId(Integer userId);
+
+    /**
+     * 根據orderId刪除訂單
+     * @param orderId 需要刪除的orderId
+     * @return 成功刪除訊息或者錯誤訊息
+     */
+    String deleteOrder(Integer orderId);
+
+    /**
+     * 根據使用者id和產品id刪除訂單
+     * @param userId 要刪除的使用者id
+     * @param productId 要刪除的產品id
+     * @return 成功刪除訊息或者錯誤訊息
+     */
+    String deleteOrderByUserIdAndProductId(Integer userId, Integer productId);
 }

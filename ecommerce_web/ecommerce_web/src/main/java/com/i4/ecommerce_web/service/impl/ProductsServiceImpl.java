@@ -3,7 +3,6 @@ package com.i4.ecommerce_web.service.impl;
 import com.i4.ecommerce_web.mapper.ProductsMapper;
 import com.i4.ecommerce_web.pojo.Products;
 import com.i4.ecommerce_web.service.ProductsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

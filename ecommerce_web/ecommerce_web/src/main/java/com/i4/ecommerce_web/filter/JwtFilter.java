@@ -34,13 +34,8 @@ public class JwtFilter extends OncePerRequestFilter {
         return;
         }
 
-        // 只排除 GET 請求的 /api/products/{id} 路徑
-        if (request.getMethod().equals("GET") && request.getServletPath().matches("/api/products/\\d+")) {
-        filterChain.doFilter(request, response);
-        return;
-        }
-        //排除熱門產品
-        if (request.getServletPath().matches("/api/products/popular")) {
+        // 排除 GET 請求所有以 /api/products/開頭 的路徑
+        if (request.getMethod().equals("GET") && request.getServletPath().startsWith("/api/products/")) {
         filterChain.doFilter(request, response);
         return;
         }
