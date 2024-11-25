@@ -57,7 +57,7 @@ public interface OrderService {
      * 根據使用者id和產品id刪除訂單
      * @param userId 要刪除的使用者id
      * @param productId 要刪除的產品id
-     * @return 成功刪除訊息或者錯誤訊息
+     * @return 刪除成功或刪除失敗
      */
-    String deleteOrderByUserIdAndProductId(Integer userId, Integer productId);
+    boolean deleteOrderByUserIdAndProductId(Integer userId, Integer productId);
 }

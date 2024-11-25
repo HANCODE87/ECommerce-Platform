@@ -89,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
      * @return 找到的符合條件的order
      */
     public Order findSameIncompleteOrder(Order order) {
-        return orderMapper.findByUserIdAndProductIdAndIncomplete(order);
+        return orderMapper.findByUserIdAndProductIdAndIncomplete(order.getUserId(),order.getProductId());
     }
 
     /**
@@ -120,9 +120,12 @@ public class OrderServiceImpl implements OrderService {
      * @return 成功刪除訊息或者錯誤訊息
      */
     @Override
-    public String deleteOrderByUserIdAndProductId(Integer userId, Integer productId) {
-        orderMapper.deleteByuserIdAndProductId(userId, productId);
-        return "訂單刪除成功!";
+    public boolean deleteOrderByUserIdAndProductId(Integer userId, Integer productId) {
+        if (orderMapper.findByUserIdAndProductIdAndIncomplete(userId, productId) != null){
+            orderMapper.deleteByUserIdAndProductId(userId, productId);
+            return true;
+        }
+        return false;
     }
 
 

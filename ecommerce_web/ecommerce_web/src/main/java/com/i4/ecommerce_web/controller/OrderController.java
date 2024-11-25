@@ -4,7 +4,6 @@ import com.i4.ecommerce_web.pojo.Order;
 import com.i4.ecommerce_web.pojo.Result;
 import com.i4.ecommerce_web.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -88,8 +87,11 @@ public class OrderController {
      * @return 成功刪除訊息或者錯誤訊息
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<Result<Void>> deleteOrderByUserIdAndProductId(@RequestParam Integer userId, Integer productId) {
+    public ResponseEntity<Result<Void>> deleteOrderByUserIdAndProductId(@RequestParam Integer userId,@RequestParam Integer productId) {
         log.info("刪除訂單:{},{}",userId,productId);
-        return new ResponseEntity<>(Result.error(orderService.deleteOrderByUserIdAndProductId(userId, productId)),HttpStatus.NOT_FOUND);
+        if (orderService.deleteOrderByUserIdAndProductId(userId, productId)){
+            return new ResponseEntity<>(Result.success(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(Result.error("刪除失敗:找不到該筆訂單"),HttpStatus.NOT_FOUND);
     }
 }
