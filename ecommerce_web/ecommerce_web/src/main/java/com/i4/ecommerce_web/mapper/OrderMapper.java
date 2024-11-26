@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+
 import java.util.List;
 
 @Mapper
@@ -40,16 +41,16 @@ public interface OrderMapper {
 
     /**
      * 尋找同一用戶與新訂單相同商品且狀態為未完成的訂單
-     * @param order 新訂單
+     * @param userId 要刪除的使用者id
+     * @param productId 要刪除的產品id
      * @return 查詢到的訂單
      */
     @Select("select * from orders where user_id = #{userId} and product_id = #{productId} and status = '未完成'")
-    Order findByUserIdAndProductIdAndIncomplete(Order order);
+    Order findByUserIdAndProductIdAndIncomplete(Integer userId, Integer productId);
 
     /**
      * 根據orderId刪除訂單
      * @param orderId 需要刪除的orderId
-     * @return 成功刪除訊息或者錯誤訊息
      */
     @Delete("delete from orders where id = #{orderId}")
     void deleteById(Integer orderId);
@@ -58,9 +59,8 @@ public interface OrderMapper {
      * 根據使用者id和產品id刪除訂單
      * @param userId 要刪除的使用者id
      * @param productId 要刪除的產品id
-     * @return 成功刪除訊息或者錯誤訊息
      */
-    @Delete("delete from orders where user_id = #{userId} and product_id = #{productId}")
-    void deleteByuserIdAndProductId(Integer userId, Integer productId);
+    @Delete("delete from orders where user_id = #{userId} and product_id = #{productId} and status = '未完成'")
+    void deleteByUserIdAndProductId(Integer userId, Integer productId);
 }
 
