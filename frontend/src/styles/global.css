@@ -1,0 +1,51 @@
+body {
+  background-color: #1b2838; /* 深藍色背景 */
+  color: #c7d5e0; /* 淺灰色文字 */
+  font-family: "Arial", sans-serif;
+}
+
+.navbar {
+  background-color: #171a21; /* 深藍色導航欄背景 */
+}
+
+.nav-link {
+  color: #c7d5e0; /* 淺灰色導航鏈接 */
+}
+
+.nav-link:hover {
+  color: #ffffff; /* 白色導航鏈接懸停效果 */
+}
+
+.nav-link.active {
+  background-color: #2a475e; /* 深藍色活動鏈接背景 */
+  color: #ffffff; /* 白色活動鏈接文字 */
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #2a475e; /* 深藍色卡片背景 */
+  color: #c7d5e0; /* 淺灰色卡片文字 */
+  border: none;
+}
+
+.card-title {
+  color: #ffffff; /* 白色卡片標題 */
+}
+
+.card-text {
+  color: #c7d5e0; /* 淺灰色卡片文字 */
+}
+
+.custom-background {
+  background-color: #1b2838; /* 自定義背景顏色 */
+  color: #c7d5e0; /* 自定義文字顏色 */
+  padding: 3rem; /* 自定義內邊距 */
+}
+
+/* 覆蓋 Bootstrap 的 bg-primary 類 */
+.bg-primary {
+  background-color: #1b2838 !important; /* 使用自定義背景顏色 */
+}

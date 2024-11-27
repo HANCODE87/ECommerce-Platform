@@ -1,0 +1,21 @@
+/* src/styles/productsPage.css */
+.active-sort {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 添加陰影 */
+  background-color: #21496d !important; /* 更改背景顏色 */
+  color: white !important; /* 更改文字顏色 */
+}
+
+.active-sort-order {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 添加陰影 */
+  background-color: #21496d !important; /* 更改背景顏色 */
+  color: white !important; /* 更改文字顏色 */
+}
+
+.btn-group .btn {
+  background-color: #2575bb;
+  margin-right: 5px; /* 調整按鈕之間的間距 */
+}
+
+.input-group .form-control {
+  margin-right: 5px; /* 調整搜尋欄和按鈕之間的間距 */
+}

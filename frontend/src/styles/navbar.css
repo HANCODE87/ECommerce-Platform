@@ -1,0 +1,24 @@
+/* src/components/Navbar.css */
+.navbar-brand {
+  margin-right: 10px; /* 調整品牌名稱與其他項目的間距 */
+  font-size: 1.5rem; /* 調整品牌名稱的字體大小 */
+  font-weight: bold; /* 調整品牌名稱的字體粗細 */
+}
+
+.nav-item {
+  margin-left: 20px; /* 調整每個導航項目之間的間距 */
+}
+
+.nav-link {
+  font-size: 1.25rem; /* 調整導航項目的字體大小 */
+  font-weight: bold; /* 調整導航項目的字體粗細 */
+}
+
+.nav-link.active {
+  background-color: #007bff; /* 設置活動鏈接的背景色 */
+  color: white; /* 設置活動鏈接的文字顏色 */
+}
+
+.navbar-nav {
+  margin-right: 20px; /* 調整導航項目與右邊的間距 */
+}

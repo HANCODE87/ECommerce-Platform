@@ -1,0 +1,10 @@
+/* src/styles/productItem.css */
+.product-item {
+  margin: 10px 0; /* 調整卡片之間的間距 */
+  width: 100%; /* 確保卡片佔滿列寬 */
+}
+
+.product-item img {
+  height: 150px; /* 調整圖片高度 */
+  object-fit: cover; /* 確保圖片按比例縮放 */
+}

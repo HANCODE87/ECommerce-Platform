@@ -1,0 +1,78 @@
+/* src/styles/productDetailPage.css */
+body {
+  background-color: #1b2838; /* 深藍色背景 */
+  color: #c7d5e0; /* 淺灰色文字 */
+  font-family: "Arial", sans-serif;
+}
+
+.product-detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #2a475e; /* 深藍色卡片背景 */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.product-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.product-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-info {
+  flex: 2;
+  padding: 20px;
+}
+
+.product-info h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #ffffff; /* 白色標題 */
+}
+
+.product-price {
+  font-size: 1.5rem;
+  color: #28a745; /* 綠色價格 */
+  margin-bottom: 20px;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.quantity-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.quantity {
+  margin: 0 10px;
+  font-size: 1.2rem;
+}
+
+.add-to-cart {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1.2rem;
+}

@@ -1,0 +1,82 @@
+body {
+  background-color: #1b2838; /* 深藍色背景 */
+  color: #c7d5e0; /* 淺灰色文字 */
+  font-family: "Arial", sans-serif;
+}
+
+.cart-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #2a475e; /* 深藍色卡片背景 */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #3b5998; /* 深藍色卡片背景 */
+  border-radius: 8px;
+}
+
+.cart-item-image {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ffffff; /* 白色標題 */
+}
+
+.cart-item-info p {
+  margin: 5px 0;
+  color: #c7d5e0; /* 淺灰色文字 */
+}
+
+.cart-summary {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.cart-summary h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #ffffff; /* 白色標題 */
+}
+
+.btn-primary {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1.2rem;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-right: 10px;
+}
