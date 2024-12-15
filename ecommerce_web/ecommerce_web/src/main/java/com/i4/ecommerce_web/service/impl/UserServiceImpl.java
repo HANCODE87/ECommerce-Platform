@@ -3,10 +3,13 @@ package com.i4.ecommerce_web.service.impl;
 import com.i4.ecommerce_web.mapper.UserMapper;
 import com.i4.ecommerce_web.pojo.User;
 import com.i4.ecommerce_web.service.UserService;
+import com.i4.ecommerce_web.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 註冊用戶 若信箱已存在則回傳false
-     * @param user username,password,email
+     * @param user 用戶的username,password,email
      * @return msg
      */
     @Override
@@ -32,27 +35,41 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根據帳號密碼登入
-     * @param user username,password
+     * @param user 用戶的username,password
      * @return user
      */
     @Override
-    public User login(User user) {
-        return userMapper.getByUsernameAndPassword(user);
+    public String login(User user) {
+        //如果找不到該筆登入資料則回傳null
+        User userRespond = userMapper.getByUsernameAndPassword(user);
+        if (userRespond == null){
+            return null;
+        }
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userRespond.getUserId()); //在payload放入會員id
+        claims.put("username", userRespond.getUsername()); //在payload放入會員名稱
+        claims.put("role", userRespond.getRole()); //在payload放入身分組
+        return JwtUtils.generateJwt(claims);
     }
 
     /**
      * 根據id取得用戶資料
-     * @param id id
+     * @param id 用戶的id
      * @return user
      */
     @Override
-    public User getUserInfo(Integer id) {
-        return userMapper.findById(id);
+    public Map<String,Object> getUserInfo(Integer id) {
+        User user = userMapper.findById(id);
+        Map<String,Object> userData = new HashMap<>();
+        userData.put("userId",user.getUserId());
+        userData.put("username",user.getUsername());
+        userData.put("email",user.getEmail());
+        return userData;
     }
 
     /**
      * 根據id更新用戶資料
-     * @param user id username email
+     * @param user 用戶的id username email
      * @return user
      */
     @Override
@@ -69,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根據id刪除資料
-     * @param id id
+     * @param id 用戶的id
      * @return Boolean
      */
     @Override

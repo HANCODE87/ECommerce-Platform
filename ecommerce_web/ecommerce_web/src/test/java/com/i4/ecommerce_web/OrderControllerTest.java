@@ -30,6 +30,5 @@ public class OrderControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
-
 }
 

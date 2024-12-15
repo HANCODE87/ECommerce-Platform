@@ -44,14 +44,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Result<String>> login(@RequestBody User user){
         log.info("登錄請求：用戶名={} 密碼={}", user.getUsername(), user.getPassword());
-        User userRespond = userService.login(user);
+        String token = userService.login(user);
         //若有返回值則帳號密碼正確，進行登入
-        if(userRespond != null){
-            Map<String, Object> claims = new HashMap<>();
-            claims.put("userId", userRespond.getUserId()); //在payload放入會員id
-            claims.put("username", userRespond.getUsername()); //在payload放入會員名稱
-            String jwt = JwtUtils.generateJwt(claims);
-            return new ResponseEntity<>(Result.success("成功登入",jwt), HttpStatus.OK);
+        if(token != null){
+            return new ResponseEntity<>(Result.success("成功登入",token), HttpStatus.OK);
         }
         return new ResponseEntity<>(Result.error("帳號或密碼錯誤", null), HttpStatus.UNAUTHORIZED);
     }
@@ -64,12 +60,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Result<Map<String,Object>>> getUserInfo(@PathVariable Integer id){
         log.info("取得會員資料:{}",id);
-        User user = userService.getUserInfo(id);
-        Map<String,Object> userData = new HashMap<>();
-        userData.put("userId",user.getUserId());
-        userData.put("username",user.getUsername());
-        userData.put("email",user.getEmail());
-        return new ResponseEntity<>(Result.success(userData), HttpStatus.FOUND);
+        return new ResponseEntity<>(Result.success(userService.getUserInfo(id)), HttpStatus.FOUND);
     }
 
     /**

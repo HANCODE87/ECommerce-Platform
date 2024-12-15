@@ -2,27 +2,29 @@ package com.i4.ecommerce_web.service;
 
 import com.i4.ecommerce_web.pojo.User;
 
+import java.util.Map;
+
 public interface UserService {
     /**
      *
-     * @param user username,password,email
+     * @param user 用戶的username,password,email
      * @return msg
      */
     Boolean register(User user);
 
     /**
      * 登入用戶
-     * @param user username,password
-     * @return user object
+     * @param user 用戶帳號密碼
+     * @return jwt token
      */
-    User login(User user);
+    String login(User user);
 
     /**
      *
-     * @param id id
+     * @param id 用戶id
      * @return userId username email
      */
-    User getUserInfo(Integer id);
+    Map<String,Object> getUserInfo(Integer id);
 
     /**
      * 根據id修改用戶資料
